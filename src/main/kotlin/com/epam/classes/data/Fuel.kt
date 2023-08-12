@@ -21,14 +21,17 @@ sealed class Fuel {
  * - in case of [NonFuel] since it's an object you should
  *   override all abstract properties in the body of the class
  */
-data class Diesel(
-    val cost: Int = 2,
-    val discount: Int = 5
-)
+ class Diesel:Fuel(){
+    override val cost: Int = 2
+    override val discount: Int = 5
+}
 
-data class Petrol(
-    val cost: Int = 3,
-    val discount: Int = 10
-)
+ class Petrol:Fuel(){
+    override val cost: Int = 3
+    override val discount: Int = 10
+}
 
-object NonFuel
+object NonFuel :Fuel(){
+    override val cost: Int=0
+    override val discount: Int=0
+}

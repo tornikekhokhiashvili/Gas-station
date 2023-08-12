@@ -18,6 +18,15 @@ class DiscountAvailabilityMapper {
      *         if input doesn't meet requirements
      * @see [Const.YES] [Const.NO]
      */
-    fun mapAnswer(isAvailable: String?): DiscountAvailability =
-        TODO()
+    fun mapAnswer(isAvailable: String?): DiscountAvailability {
+        if (isAvailable.isNullOrBlank()){
+            return DiscountAvailability.ERROR
+        }
+        var input=isAvailable.trim().toLowerCase()
+        return when(input){
+            Const.YES->DiscountAvailability.AVAILABLE
+            Const.NO->DiscountAvailability.NON_AVAILABLE
+            else->DiscountAvailability.ERROR
+        }
+    }
 }

@@ -9,8 +9,8 @@ package com.epam.classes.data
  * - [NonFuel] type is suitable to be a default fuel
  */
 sealed class Vehicle(
-    val fuel: Fuel = TODO(),
-    val volume: Int = TODO()
+    open val fuel: Fuel = NonFuel,
+    open val volume: Int = 0
 )
 
 /**
@@ -25,23 +25,46 @@ sealed class Vehicle(
  *  *default values* in super class
  */
 class Bike(
-    fuel: Petrol,
-    volume: Int = 15,
-)
+    override var fuel:Petrol=Petrol(),
+        override var volume:Int=15
+) :Vehicle(){
+    override fun toString(): String {
+        return "Bike"
+    }
+}
 
 class Car(
-    fuel: Petrol,
-    volume: Int = 70,
-)
+    override var fuel:Petrol=Petrol(),
+    override var volume: Int = 70
+) :Vehicle(){
+    override fun toString(): String {
+        return "Car"
+    }
+}
 
 class Bus(
-    fuel: Diesel,
-    volume: Int = 300
-)
+    override val fuel: Diesel = Diesel(),
+    override val volume: Int = 300
+
+) : Vehicle(){
+    override fun toString(): String {
+        return "Bus"
+    }
+}
 
 class Truck(
-    fuel: Diesel,
-    volume: Int = 800
-)
+    override val fuel: Diesel=Diesel(),
+        override val volume: Int=800
+):Vehicle(){
+    override fun toString(): String {
+        return "Truck"
+    }
+}
 
-object NonVehicle
+object NonVehicle:Vehicle(){
+    override val fuel: Fuel=NonFuel
+    override val volume: Int=0
+    override fun toString(): String {
+        return "NonVehicle"
+    }
+}
