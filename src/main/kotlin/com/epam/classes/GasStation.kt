@@ -45,7 +45,7 @@ class GasStation {
         val validAmount=validateAndConvertVolume(amount,vehicle.volume)
         if (validAmount!=null){
             val bill=Bill(vehicle,discountAvaliable,validAmount,0.0)
-            var billWithTotalPrice=calculateTotalPrice(bill)
+            val billWithTotalPrice=calculateTotalPrice(bill)
             checkAndShowTotalInfo(billWithTotalPrice)
         }
         else {
@@ -124,7 +124,7 @@ class GasStation {
     fun checkAndReturnIsDiscountAvailable(answerAboutDiscount: String?): Boolean? {
         val discountAvailability = discountAvailabilityMapper.mapAnswer(answerAboutDiscount)
 
-        return when (discountAvailability) {
+         when (discountAvailability) {
             DiscountAvailability.AVAILABLE -> {
                 println("Discount exist")
                 true
@@ -171,8 +171,7 @@ class GasStation {
                 val totalPrice = calculateTotalPrice(updatedBill)
                 println("Total info: $totalPrice")
             }
-        }
-        else {
+        } else {
                 println("Please enter correct value (not bigger than your tank volume: ${bill.vehicle.volume} liters)")
         }
 
@@ -212,12 +211,12 @@ class GasStation {
         return updatedBill
     }
 
-    private fun isDiscountExist(): Boolean? {
+     fun isDiscountExist(): Boolean? {
         println("Do you have a discount card? ($YES or $NO)")
         return checkAndReturnIsDiscountAvailable(readLine())
     }
 
-    private fun selectVehicle(): Vehicle {
+     fun selectVehicle(): Vehicle {
         println("Please choose your vehicle: $BIKE, $CAR, $BUS or $TRUCK")
         return getCustomerVehicle(readLine())
     }

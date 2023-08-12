@@ -22,7 +22,7 @@ class DiscountAvailabilityMapper {
         if (isAvailable.isNullOrBlank()){
             return DiscountAvailability.ERROR
         }
-        var input=isAvailable.trim().toLowerCase()
+        val input=isAvailable.trim().toLowerCase()
         return when(input){
             Const.YES->DiscountAvailability.AVAILABLE
             Const.NO->DiscountAvailability.NON_AVAILABLE

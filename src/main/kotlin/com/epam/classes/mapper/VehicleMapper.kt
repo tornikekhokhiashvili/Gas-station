@@ -22,7 +22,7 @@ class VehicleMapper {
         if (vehicleName.isNullOrBlank()){
             return NonVehicle
         }
-        var input= vehicleName?.trim()?.toLowerCase()
+        val input= vehicleName?.trim()?.toLowerCase()
         return when(input){
             Const.BUS->Bus()
             Const.TRUCK->Truck()
