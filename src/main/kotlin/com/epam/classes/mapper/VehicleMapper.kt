@@ -19,9 +19,6 @@ class VehicleMapper {
      * @see [Const.BUS] [Const.TRUCK] [Const.CAR] [Const.BIKE]
      */
     fun mapNameToVehicle(vehicleName: String?): Vehicle{
-        if (vehicleName.isNullOrBlank()){
-            return NonVehicle
-        }
         val input= vehicleName?.trim()?.toLowerCase()
         return when(input){
             Const.BUS->Bus()

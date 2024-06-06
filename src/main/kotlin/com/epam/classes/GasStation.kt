@@ -40,11 +40,11 @@ class GasStation {
         val vehicleName=readInput("Select a vehicle")
         val vehicle=vehicleMapper.mapNameToVehicle(vehicleName)
         val discountInput=readInput("Do you have discount? (yes/no)")
-        val discountAvaliable = mapInputToBoolean(discountInput)
+        val discountAvailable = mapInputToBoolean(discountInput)
         val amount=readInput("How much fuel do you want to fill?: ")
         val validAmount=validateAndConvertVolume(amount,vehicle.volume)
         if (validAmount!=null){
-            val bill=Bill(vehicle,discountAvaliable,validAmount,0.0)
+            val bill=Bill(vehicle,discountAvailable,validAmount,0.0)
             val billWithTotalPrice=calculateTotalPrice(bill)
             checkAndShowTotalInfo(billWithTotalPrice)
         }
@@ -53,7 +53,7 @@ class GasStation {
         }
 
     }
-    fun readInput(input:String):String{
+    private fun readInput(input:String):String{
         println(input)
         return readLine()?:""
     }
@@ -61,7 +61,7 @@ class GasStation {
         val totalPrice=bill.totalPrice
         println("Total price: $totalPrice")
     }
-    fun mapInputToBoolean(input: String): Boolean? {
+    private fun mapInputToBoolean(input: String): Boolean? {
         return when (input.toLowerCase()) {
             "yes" -> true
             "no" -> false
@@ -87,12 +87,11 @@ class GasStation {
      * @param vehicleName represents clients input with selected vehicle
      * @return appropriate vehicle based on clients input
      */
-    tailrec fun getCustomerVehicle(vehicleName: String?): Vehicle {
-        var currentVehicleName = vehicleName
+     fun getCustomerVehicle(vehicleName: String?): Vehicle {
         while (true) {
-            val selectedVehicle = vehicleMapper.mapNameToVehicle(currentVehicleName)
+            val selectedVehicle = vehicleMapper.mapNameToVehicle(vehicleName)
             if (selectedVehicle is NonVehicle){
-                println("Please select one of available vehicles: ${Const.BIKE}, ${Const.CAR}, ${Const.BUS} or ${Const.TRUCK}")
+                println("Please select one of available vehicles: $BIKE, $CAR, $BUS or $TRUCK")
                 return selectedVehicle
             }else{
                 println("Your vehicle is ${selectedVehicle::class.simpleName}")
@@ -121,24 +120,19 @@ class GasStation {
      * @param answerAboutDiscount represents client input with discount availability
      * @return is discount available or not
      */
-    fun checkAndReturnIsDiscountAvailable(answerAboutDiscount: String?): Boolean? {
+    fun checkAndReturnIsDiscountAvailable(answerAboutDiscount: String?): Boolean {
         val discountAvailability = discountAvailabilityMapper.mapAnswer(answerAboutDiscount)
-
          when (discountAvailability) {
             DiscountAvailability.AVAILABLE -> {
                 println("Discount exist")
-                true
             }
             DiscountAvailability.NON_AVAILABLE -> {
                 println("Discount doesn't exist")
-                false
             }
             else -> {
-                println("Please enter \"${Const.YES}\" or \"${Const.NO}\"")
-                null
+                println("Please enter \"$YES\" or \"$NO\"")
             }
         }
-
         return discountAvailability == DiscountAvailability.AVAILABLE
     }
 
@@ -176,7 +170,7 @@ class GasStation {
         }
 
     }
-    fun validateAndConvertVolume(volumeString: String?, maxVolume: Int): Int? {
+    private fun validateAndConvertVolume(volumeString: String?, maxVolume: Int): Int? {
         val volume = volumeString?.toIntOrNull()
         return if (volume != null && volume <= maxVolume) {
             volume
@@ -200,23 +194,22 @@ class GasStation {
      */
     fun calculateTotalPrice(bill: Bill): Bill {
         val fuel=bill.vehicle.fuel
-        val baseprice=fuel.cost.toDouble() * bill.amountToFill.toDouble()
+        val basePrice=fuel.cost.toDouble() * bill.amountToFill.toDouble()
         val discountedPrice=if (bill.isDiscountExist==true){
-            baseprice*(1-(fuel.discount.toDouble()/100.0))
+            basePrice*(1-(fuel.discount.toDouble()/100.0))
         }else{
-            baseprice
+            basePrice
         }
         val updatedBill = bill.copy(totalPrice = discountedPrice)
-
         return updatedBill
     }
 
-     fun isDiscountExist(): Boolean? {
+     fun isDiscountExist(): Boolean {
         println("Do you have a discount card? ($YES or $NO)")
         return checkAndReturnIsDiscountAvailable(readLine())
     }
 
-     fun selectVehicle(): Vehicle {
+     private fun selectVehicle(): Vehicle {
         println("Please choose your vehicle: $BIKE, $CAR, $BUS or $TRUCK")
         return getCustomerVehicle(readLine())
     }

@@ -24,47 +24,29 @@ sealed class Vehicle(
  * - in case of [NonVehicle] since it's an object you can use
  *  *default values* in super class
  */
-class Bike(
-    override var fuel:Petrol=Petrol(),
-        override var volume:Int=15
-) :Vehicle(){
+class Bike() :Vehicle(fuel=Petrol(),volume=15){
     override fun toString(): String {
         return "Bike"
     }
 }
 
-class Car(
-    override var fuel:Petrol=Petrol(),
-    override var volume: Int = 70
-) :Vehicle(){
+class Car() :Vehicle(fuel=Petrol(),volume=70){
     override fun toString(): String {
         return "Car"
     }
 }
 
-class Bus(
-    override val fuel: Diesel = Diesel(),
-    override val volume: Int = 300
-
-) : Vehicle(){
+class Bus() : Vehicle(fuel=Diesel(),volume=300){
     override fun toString(): String {
         return "Bus"
     }
 }
 
-class Truck(
-    override val fuel: Diesel=Diesel(),
-        override val volume: Int=800
-):Vehicle(){
+class Truck():Vehicle(fuel=Diesel(),volume=800){
     override fun toString(): String {
         return "Truck"
     }
 }
 
-object NonVehicle:Vehicle(){
-    override val fuel: Fuel=NonFuel
-    override val volume: Int=0
-    override fun toString(): String {
-        return "NonVehicle"
-    }
-}
+object NonVehicle:Vehicle()
+
